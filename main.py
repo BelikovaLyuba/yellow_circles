@@ -1,16 +1,22 @@
 import sys
-
-from PyQt5 import uic
-from PyQt5.QtWidgets import QApplication, QMainWindow
+from PyQt5.QtWidgets import QWidget, QApplication, QPushButton
 from PyQt5.QtGui import QPainter, QColor
-from random import randrange
+from random import randint
 
 
-class MyWidget(QMainWindow):
+class Example(QWidget):
     def __init__(self):
         super().__init__()
-        uic.loadUi("UI.ui", self)
+        self.initUI()
+
+    def initUI(self):
+        self.setGeometry(400, 400, 400, 400)
+
         self.c = False
+
+        self.pb = QPushButton(self)
+        self.pb.setText('Показать')
+        self.pb.move(10, 10)
         self.pb.clicked.connect(self.a)
 
     def a(self):
@@ -21,16 +27,16 @@ class MyWidget(QMainWindow):
         if self.c:
             qp = QPainter()
             qp.begin(self)
-            b = randrange(1, 200)
-            qp.setPen(QColor(255, 255, 0))
-            qp.drawArc(100, 100, b, b, 10000, 10000)
+            d = randint(0, 200)
+            r, g, b = randint(0, 255), randint(0, 255), randint(0, 255)
+            qp.setPen(QColor(r, g, b))
+            qp.drawArc(100, 100, d, d, 10000, 10000)
             qp.end()
             self.c = False
 
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    sys.excepthook = except_hook
-    ex = MyWidget()
+    ex = Example()
     ex.show()
-    sys.exit(app.exec_())
+    sys.exit(app.exec())
